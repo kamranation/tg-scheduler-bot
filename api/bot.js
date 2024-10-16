@@ -20,19 +20,24 @@ bot.start((ctx) => {
   const userId = ctx.from.id.toString();
   
   const startParam = referrerId ? `ref_${referrerId}` : `ref_${userId}`;
-
-  ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.", {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "Cədvələ keçid",
-            url: `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=${startParam}`
-          }
+  const miniAppLink = `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=${startParam}`;
+  ctx.reply(referrerId);
+  if (referrerId) {
+    ctx.reply(`Sizi dəvət edənin linki: ${miniAppLink}`);
+  } else {
+    ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.", {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: "Cədvələ keçid",
+              url: miniAppLink
+            }
+          ]
         ]
-      ]
-    }
-  });
+      }
+    });
+  }
 });
 
 
