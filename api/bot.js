@@ -19,38 +19,23 @@ bot.start((ctx) => {
   const referrerId = messageText.includes("ref_") ? messageText.split(" ")[1]?.replace("ref_", "") : null;
   const userId = ctx.from.id.toString();
   
-  // const startParam = referrerId ? `ref_${referrerId}` : `ref_${userId}`;
-  // const miniAppLink = `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=${startParam}`;
+  const startParam = referrerId ? `ref_${referrerId}` : `ref_${userId}`;
+  const miniAppUrl = `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=${startParam}`;
 
-  // ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.");
-  
-  if (referrerId) {
-    ctx.reply("Səni dəvət edənin cədvəlinə keçid.", {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: "Cədvələ keçid",
-              url: `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=ref_${referrerId}`
+  ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.", {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: "Cədvələ keçid",
+            web_app: {
+              url: miniAppUrl
             }
-          ]
+          }
         ]
-      }
-    });
-  } else {
-    ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.", {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: "Cədvələ keçid",
-              url: `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=ref_${userId}`
-            }
-          ]
-        ]
-      }
-    });
-  }
+      ]
+    }
+  });
 });
 
 
