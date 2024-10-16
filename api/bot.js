@@ -18,17 +18,28 @@ bot.start((ctx) => {
   const messageText = ctx.message.text || ""; 
   const referrerId = messageText.includes("ref_") ? messageText.split(" ")[1]?.replace("ref_", "") : null;
   const userId = ctx.from.id.toString();
-  if (referrerId) {
-    ctx.reply(`Welcome! You were referred by user ID: ${referrerId}`);
-  } else {
-    ctx.reply("Bota xoş gəlmisiniz! Cədvəlinizi paylaşmaq üçün /share_schedule istifadə edin.");
-  }
+  
+  const startParam = referrerId ? `ref_${referrerId}` : `ref_${userId}`;
+
+  ctx.reply("Bota xoş gəlmisən! Cədvəlini paylaşmaq üçün /share_schedule kliklə.", {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: "Cədvələ keçid",
+            url: `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=${startParam}`
+          }
+        ]
+      ]
+    }
+  });
 });
 
+
 bot.command("share_schedule", (ctx) => {
-  const referrerId = ctx.from.id;
-  const miniAppLink = `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=ref_${referrerId}`;
-  ctx.reply(`Bu linkdən istifadə edərək cədvəlinizi paylaşın: ${miniAppLink}`);
+  const userId = ctx.from.id;
+  const miniAppLink = `https://t.me/tg_scheduler_bot/tg_scheduler_app?start=ref_${userId}`;
+  ctx.reply(`Bu linkdən istifadə edərək cədvəlini başqaları ilə paylaş: ${miniAppLink}`);
 });
 
 // Function to handle the webhook request
